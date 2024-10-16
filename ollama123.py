@@ -145,7 +145,7 @@ def get_vector_store(text_chunks, batch_size=100):
     return vector_store
 
 # Define the path for the permanent cache file
-PERMANENT_CACHE_FILE = "permanent_cache_new.json"
+# PERMANENT_CACHE_FILE = "permanent_cache_new.json"
 
 # Load the permanent cache from the file if it exists
 def load_permanent_cache():
@@ -160,7 +160,7 @@ def save_permanent_cache(cache):
         json.dump(cache, file)
 
 # Initialize the permanent cache
-permanent_cache = load_permanent_cache()
+# permanent_cache = load_permanent_cache()
 
 def save_permanent_answer(question, answer):
     permanent_cache[question] = answer
