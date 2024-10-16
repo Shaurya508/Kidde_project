@@ -24,8 +24,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time
 import re
-from trial import translate
-import langid
+# from trial import translate
+# import langid
 from langchain_ollama import ChatOllama
 from langchain_ollama import OllamaEmbeddings
 # Load the Google API key from the .env file
