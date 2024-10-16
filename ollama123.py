@@ -1,29 +1,29 @@
 from langchain_community.vectorstores import FAISS
 from langchain.prompts import PromptTemplate
-import json
-import os
+# import json
+# import os
 # from PyPDF2 import PdfReader #used it before now using tesseract
-import requests
-from bs4 import BeautifulSoup
+# import requests
+# from bs4 import BeautifulSoup
 # from dotenv import load_dotenv
-import google.generativeai as genai
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+# import google.generativeai as genai
+# from langchain.text_splitter import RecursiveCharacterTextSplitter
 # from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from langchain.chains.question_answering import load_qa_chain
 import pandas as pd
-from langchain.retrievers.multi_query import MultiQueryRetriever
-from langchain.memory import ConversationBufferMemory
+# from langchain.retrievers.multi_query import MultiQueryRetriever
+# from langchain.memory import ConversationBufferMemory
 # from langchain.chains import ConversationalRetrievalChain
 # from langchain.chains import ConversationChain
-from pdf2image import convert_from_path
+# from pdf2image import convert_from_path
 # from PIL import Image
 import streamlit as st
-import pytesseract
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-import time
-import re
+# import pytesseract
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.common.keys import Keys
+# import time
+# import re
 # from trial import translate
 # import langid
 from langchain_ollama import ChatOllama
@@ -397,15 +397,15 @@ def user_input4(user_question):
     # embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
     embeddings = OllamaEmbeddings(model="zxf945/nomic-embed-text:latest")
     # questions_db = FAISS.load_local("faiss_index_questions", embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001"), allow_dangerous_deserialization=True)
-    def clean_text(text):
-        return re.sub(r'[?.]', '', text).strip().lower()
-    language, confidence = langid.classify(user_question)
-    print(language)
-    if(language != "en"):
-        user_question = translate(user_question , language , "en")
+    # def clean_text(text):
+        # return re.sub(r'[?.]', '', text).strip().lower()
+    # language, confidence = langid.classify(user_question)
+    # print(language)
+    # if(language != "en"):
+        # user_question = translate(user_question , language , "en")
     # New code
-    print(user_question)
-    user_question_cleaned = clean_text(user_question)
+    # print(user_question)
+    # user_question_cleaned = clean_text(user_question)
 
     # Clean all keys in the permanent_cache
     # permanent_cache_cleaned = {clean_text(key): value for key, value in permanent_cache.items()}
@@ -436,7 +436,7 @@ def user_input4(user_question):
     # questions_db = FAISS.load_local('FAISS_INDEX_Questions' , embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001") , allow_dangerous_deserialization=True)
     # suggested_questions = questions_db.similarity_search(query=user_question, k = 5)
     response = chain({"input_documents": docs1, "question": user_question}, return_only_outputs=True)
-    return response , docs1, None , language
+    return response , docs1, None , None
 
 def user_input5(user_question):
     # embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
