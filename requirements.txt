@@ -4,3 +4,7 @@ langchain_community
 langchain
 langchain_ollama
 Levenshtein
+torch
+faiss-cpu
+PIL
+matplotlib
