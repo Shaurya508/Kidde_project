@@ -6,7 +6,6 @@ langchain_ollama
 Levenshtein
 torch
 faiss-cpu
-PIL
 matplotlib
 aiohappyeyeballs==2.4.3
 aiohttp==3.10.9
