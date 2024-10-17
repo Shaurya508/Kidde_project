@@ -151,6 +151,8 @@ def create_ui():
         with col2:
             st.write(r)
             image_path = retrieve_best_image(q)
+            st.write(f"Image path: {image_path}")
+
             print(image_path)
             if(image_path != None):
                 if os.path.exists(image_path):
