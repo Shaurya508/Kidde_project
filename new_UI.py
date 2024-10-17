@@ -150,6 +150,13 @@ def create_ui():
             st.image('download.png', width=30)
         with col2:
             st.write(r)
+            if(image_path != None):
+                if os.path.exists(image_path):
+                    image = Image.open(image_path)
+                    st.image(image, use_column_width=True)
+                else:
+                    print(f"Image not found at {image_path}")
+            
             # LANGUAGES = {
             #     'Arabic': 'ar', 'Azerbaijani': 'az', 'Catalan': 'ca', 'Chinese': 'zh', 'Czech': 'cs',
             #     'Danish': 'da', 'Dutch': 'nl', 'English': 'en', 'Esperanto': 'eo', 'Finnish': 'fi',
@@ -165,8 +172,8 @@ def create_ui():
             #     st.write(r + "\n")
             # else:
             #     st.write(clean_text(r1) + "\n")
-            # image_path = retrieve_best_image(q)
-            #     # print(image_path)
+            image_path = retrieve_best_image(q)
+                # print(image_path)
             # if(image_path != None):
             #     if os.path.exists(image_path):
             #         image = Image.open(image_path)
