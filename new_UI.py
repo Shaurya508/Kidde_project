@@ -149,6 +149,7 @@ def create_ui():
         with col1:
             st.image('download.png', width=30)
         with col2:
+            image_path = retrieve_best_image(q)
             st.write(r)
             if(image_path != None):
                 if os.path.exists(image_path):
@@ -172,7 +173,7 @@ def create_ui():
             #     st.write(r + "\n")
             # else:
             #     st.write(clean_text(r1) + "\n")
-            image_path = retrieve_best_image(q)
+        
                 # print(image_path)
             # if(image_path != None):
             #     if os.path.exists(image_path):
