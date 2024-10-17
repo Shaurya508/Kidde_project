@@ -50,7 +50,7 @@ def retrieve_best_image(text):
             print(f"Best match - Index: {idx}, Distance: {distance}")
             
             # Get image path corresponding to the index
-            path = get_image_paths("MMMGPT_Mini_Images\MMMGPT Mini", idx)[0]
+            path = get_image_paths("MMMGPT_Mini_Images/MMMGPT Mini", idx)[0]
             
             # Open and display the image
             im = Image.open(path)
