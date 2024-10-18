@@ -2,15 +2,15 @@ import faiss
 import torch
 from PIL import Image
 import matplotlib.pyplot as plt
-import clip
+# import clip
 import os
 from langchain_ollama import OllamaEmbeddings
 import numpy as np
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 # Load the CLIP model
-device = "cpu"
-model, preprocess = clip.load("ViT-B/32", device=device)
+# device = "cpu"
+# model, preprocess = clip.load("ViT-B/32", device=device)
 
 def get_image_paths(directory: str, number: int = None) -> list:
     """Retrieve image paths from the given directory."""
