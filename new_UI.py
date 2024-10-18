@@ -151,8 +151,6 @@ def create_ui():
         with col2:
             st.write(r)
             image_path = retrieve_best_image(q)
-            # st.write(f"Image path: {image_path}")
-
             print(image_path)
             if(image_path != None):
                 if os.path.exists(image_path):
@@ -160,7 +158,6 @@ def create_ui():
                     st.image(image, use_column_width=True)
                 else:
                     print(f"Image not found at {image_path}")
-            
             # LANGUAGES = {
             #     'Arabic': 'ar', 'Azerbaijani': 'az', 'Catalan': 'ca', 'Chinese': 'zh', 'Czech': 'cs',
             #     'Danish': 'da', 'Dutch': 'nl', 'English': 'en', 'Esperanto': 'eo', 'Finnish': 'fi',
@@ -176,14 +173,7 @@ def create_ui():
             #     st.write(r + "\n")
             # else:
             #     st.write(clean_text(r1) + "\n")
-        
-                # print(image_path)
-            # if(image_path != None):
-            #     if os.path.exists(image_path):
-            #         image = Image.open(image_path)
-            #         st.image(image, use_column_width=True)
-            #     else:
-            #         print(f"Image not found at {image_path}")
+            
             # # Language selection
             # target_language = st.selectbox(
             #     'Select target language', options=list(LANGUAGES.keys()), key=f'target_language_{idx}'

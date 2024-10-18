@@ -1,7 +1,7 @@
 from langchain_community.vectorstores import FAISS
 from langchain.prompts import PromptTemplate
-# import json
-# import os
+import json
+import os
 # from PyPDF2 import PdfReader #used it before now using tesseract
 # import requests
 # from bs4 import BeautifulSoup
@@ -22,8 +22,8 @@ import streamlit as st
 # from selenium import webdriver
 # from selenium.webdriver.common.by import By
 # from selenium.webdriver.common.keys import Keys
-# import time
-# import re
+import time
+import re
 # from trial import translate
 # import langid
 from langchain_ollama import ChatOllama
@@ -56,6 +56,9 @@ def linkedin_login(email, password , driver):
     
     # Wait for a bit to allow login to complete
     time.sleep(5)
+
+def clean_text(text):
+    return re.sub(r'[?.]', '', text).strip().lower()
 
 # Function to scrape LinkedIn post content
 def scrape_linkedin_post(url , driver):
@@ -145,35 +148,6 @@ def get_vector_store(text_chunks, batch_size=100):
     return vector_store
 
 # Define the path for the permanent cache file
-# PERMANENT_CACHE_FILE = "permanent_cache_new.json"
-
-# Load the permanent cache from the file if it exists
-def load_permanent_cache():
-    if os.path.exists(PERMANENT_CACHE_FILE):
-        with open(PERMANENT_CACHE_FILE, "r") as file:
-            return json.load(file)
-    return {}
-
-# Save the permanent cache to the file
-def save_permanent_cache(cache):
-    with open(PERMANENT_CACHE_FILE, "w") as file:
-        json.dump(cache, file)
-
-# Initialize the permanent cache
-# permanent_cache = load_permanent_cache()
-
-def save_permanent_answer(question, answer):
-    permanent_cache[question] = answer
-    save_permanent_cache(permanent_cache)
-
-def delete_permanent_cache_item(question):
-    if question in permanent_cache:
-        del permanent_cache[question]
-        save_permanent_cache(permanent_cache)
-        print(f"Deleted question '{question}' from the permanent cache.")
-    else:
-        print(f"Question '{question}' not found in the permanent cache.")
-
 
 
 # Initialize an empty list to store conversation history
@@ -393,6 +367,38 @@ def user_input3(user_question):
     response = chain({"input_documents": docs1, "question": user_question}, return_only_outputs=True)
     return response , docs1,suggested_questions , language
 
+
+# Define the path for the permanent cache file
+PERMANENT_CACHE_FILE = "Cache_MMMGPT_enterprise.json"
+
+# Load the permanent cache from the file if it exists
+def load_permanent_cache():
+    if os.path.exists(PERMANENT_CACHE_FILE):
+        with open(PERMANENT_CACHE_FILE, "r") as file:
+            return json.load(file)
+    return {}
+
+# Save the permanent cache to the file
+def save_permanent_cache(cache):
+    with open(PERMANENT_CACHE_FILE, "w") as file:
+        json.dump(cache, file)
+
+# Initialize the permanent cache
+permanent_cache = load_permanent_cache()
+
+def save_permanent_answer(question, answer):
+    permanent_cache[question] = answer
+    save_permanent_cache(permanent_cache)
+
+def delete_permanent_cache_item(question):
+    if question in permanent_cache:
+        del permanent_cache[question]
+        save_permanent_cache(permanent_cache)
+        print(f"Deleted question '{question}' from the permanent cache.")
+    else:
+        print(f"Question '{question}' not found in the permanent cache.")
+
+
 def user_input4(user_question):
     # embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
     embeddings = OllamaEmbeddings(model="zxf945/nomic-embed-text:latest")
@@ -405,15 +411,15 @@ def user_input4(user_question):
         # user_question = translate(user_question , language , "en")
     # New code
     # print(user_question)
-    # user_question_cleaned = clean_text(user_question)
+    user_question_cleaned = clean_text(user_question)
 
     # Clean all keys in the permanent_cache
-    # permanent_cache_cleaned = {clean_text(key): value for key, value in permanent_cache.items()}
+    permanent_cache_cleaned = {clean_text(key): value for key, value in permanent_cache.items()}
 
-    # if user_question_cleaned in permanent_cache_cleaned:
-    #     # time.sleep(5)
-    #     suggested_questions = questions_db.similarity_search(query=user_question, k = 5)
-    #     return permanent_cache_cleaned[user_question_cleaned], None, suggested_questions ,language
+    if user_question_cleaned in permanent_cache_cleaned:
+        time.sleep(5)
+        # suggested_questions = questions_db.similarity_search(query=user_question, k = 5)
+        return permanent_cache_cleaned[user_question_cleaned], None, None ,None
     # embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
     prompt_template = """
     Answer the question from the context given below and Don't aswer if you don't know the answer from context.
@@ -432,10 +438,11 @@ def user_input4(user_question):
     new_db = FAISS.load_local("FAISS_INDEX_RETAIL_DOMAIN", embeddings, allow_dangerous_deserialization=True)  # Load the previously saved vector db
     # mq_retriever = MultiQueryRetriever.from_llm(retriever = new_db.as_retriever(search_kwargs={'k': 5}), llm = model )
     # docs1 = mq_retriever.get_relevant_documents(query=user_question)
-    docs1 = new_db.similarity_search(user_question , k = 5)
+    docs1 = new_db.similarity_search(user_question , k = 10)
     # questions_db = FAISS.load_local('FAISS_INDEX_Questions' , embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001") , allow_dangerous_deserialization=True)
     # suggested_questions = questions_db.similarity_search(query=user_question, k = 5)
     response = chain({"input_documents": docs1, "question": user_question}, return_only_outputs=True)
+    save_permanent_answer(user_question , response)
     return response , docs1, None , None
 
 def user_input5(user_question):
