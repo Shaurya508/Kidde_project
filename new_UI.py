@@ -112,8 +112,8 @@ def create_ui():
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
     # st.markdown("<h2 style='text-align: center; color: #0adbfc;'><u>Aryma Labs - MMMGPT(Mini)</u></h2>", unsafe_allow_html=True)
     # Create columns for title and logo
-    st.markdown("<h2 style='text-align: center; color: #0adbfc;'><u>Aryma Labs - MMMGPT(Mini)</u></h2>", unsafe_allow_html=True)
-    st.image('Client_logo.png', width=50)
+    st.markdown("<h2 style='text-align: center; color: #0adbfc;'><u>Aryma Labs - ArymaGPT</u></h2>", unsafe_allow_html=True)
+    # st.image('Client_logo.png', width=50)
     st.sidebar.image("Aryma Labs Logo.jpeg")
     st.sidebar.markdown("<h2 style='color: #08daff;'>Welcome to Aryma Labs</h2>", unsafe_allow_html=True)
     st.sidebar.write("Ask anything about your MMM project and get accurate insights.")
